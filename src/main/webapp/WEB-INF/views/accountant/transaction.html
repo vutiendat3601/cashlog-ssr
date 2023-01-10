@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/resources/common/css/base.css}">
+    <link rel="stylesheet" th:href="@{/resources/accountant/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/resources/fontawesome-free-6.2.1/css/fontawesome.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/fontawesome-free-6.2.1/css/brands.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/fontawesome-free-6.2.1/css/solid.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/accountant/css/transaction.css}">
+    <!-- <link rel="stylesheet" href="../../../resources/common/css/base.css"> -->
+    <!-- <link rel="stylesheet" href="../../../resources/accountant/css/transaction.css"> -->
+    <!-- <link rel="stylesheet" href="../../../resources/fontawesome-free-6.2.1/css/fontawesome.min.css"> -->
+    <!-- <link rel="stylesheet" href="../../../resources/fontawesome-free-6.2.1/css/brands.min.css"> -->
+    <!-- <link rel="stylesheet" href="../../../resources/fontawesome-free-6.2.1/css/solid.min.css"> -->
+</head>
+
+<body>
+    <main class="app">
+        <header th:replace="~{accountant/fragment/header :: header}"></header>
+
+        <div class="tool mt-12 ">
+            <div class="tool__search">
+                <div class="tool__search-icon mr-8"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></div>
+                <input type="text" class="tool__searchbar" placeholder="Search everything...">
+                <div class="tool__search-del-keyword"><span>x</span></div>
+            </div>
+            <div class="tool__menu">
+                <button class="btn bg-green" onclick="transactionModal()">
+                    <i class="mr-8 fa-solid fa-plus"></i>Thêm giao dịch
+                </button>
+            </div>
+        </div>
+
+        <div class="content mt-12">
+            <table class="tbl transaction">
+                <thead class="tbl__head transaction__head">
+                    <tr class="tbl__row bg-aqua">
+                        <th class="transaction__head-id tbl__cell ta-l">ID</th>
+                        <th class="transaction__head-date tbl__cell ta-l">Date</th>
+                        <th class="transaction__head-trader tbl__cell ta-l">Trader</th>
+                        <th class="transaction__head-detail tbl__cell ta-l">Detail</th>
+                        <th class="transaction__head-collected tbl__cell ta-r">Collected</th>
+                        <th class="transaction__head-paid tbl__cell ta-r">Paid</th>
+                        <th class="transaction__head-bank tbl__cell ta-l">Bank</th>
+                    </tr>
+                </thead>
+                <tbody class="tbl__body transaction__body">
+                    <tr class="tbl__row transaction__info">
+                        <td class="tbl__cell"></td>
+                        <td class="tbl__cell"></td>
+                        <td class="tbl__cell"></td>
+                        <td class="tbl__cell"></td>
+                        <td class="tbl__cell ta-r transaction__info-collected text-blue" style="font-weight: 600;">
+                            200,000
+                        </td>
+                        <td class="tbl__cell ta-r transaction__info-paid text-red" style="font-weight: 600;">0</td>
+                        <td class="tbl__cell"></td>
+                    </tr>
+                    <tr class="tbl__row transaction__record" th:each="trans : ${transactions}">
+                        <td class="transaction__record-id tbl__cell" th:text="${trans.transId}">1</td>
+                        <td class="transaction__record-date tbl__cell transaction__date" th:text="${trans.datetime}">
+                            2021-01-22
+                            21:38:00</td>
+                        <td class="transaction__record-trader tbl__cell" th:text="${trans.userDto.fullName}">Dat
+                            Vu(ct06n0110)</td>
+                        <td class="transaction__record-detail tbl__cell transaction__detail" th:text="${trans.detail}">
+                        <td class="transaction__record-collected tbl__cell ta-r text-blue" th:text="${trans.collected}">
+                        </td>
+                        <td class="transaction__record-paid tbl__cell ta-r text-red" th:text="${trans.paid}">0</td>
+                        <td class="transaction__record-bank tbl__cell" th:text="${trans.bankDto.name}">TECHCOMBANK</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination transaction__pagination">
+            <a class="pagination-item pagination-item-link"
+                th:href="|@{/accountant/transaction}?page=${currentPage-1}&max=${maxPerPage}|"
+                th:styleappend="${currentPage == 1} ? 'display:none'"><i class="fa-solid fa-backward"></i></a>
+            <ul style="padding: 0; margin: 0; list-style: none;">
+                <li class="pagination-item" th:each="i : ${#numbers.sequence(1, numOfPage)}"
+                    th:classappend="${currentPage == i} ? active">
+                    <a class="pagination-item-link" th:href="|@{/accountant/transaction}?page=${i}&max=${maxPerPage}|"
+                        th:text="${i}"></a>
+                </li>
+            </ul>
+            <a class="pagination-item pagination-item-link"
+                th:href="|@{/accountant/transaction}?page=${currentPage+1}&max=${maxPerPage}|"
+                th:styleappend="${currentPage == numOfPage} ? 'display:none'"><i class="fa-solid fa-forward"></i></a>
+        </div>
+    </main>
+
+    <div id="createTransactionModal" class="modal">
+        <div class="modal__overlay" onclick="transactionModal()"></div>
+        <div class="modal__body">
+            <div class="modal__inner">
+                <form class="create-transaction" th:object="${transReq}" method="post"
+                    th:action="@{/accountant/transaction}">
+                    <h3 style="font-size: 24px; padding: 8px; margin: 4px 0;">Create Transaction</h3>
+                    <div class="form-input">
+                        <label class="lbl" for="inp-trader">Trader</label>
+                        <select class="slc" id="inp-trader" th:field="*{userId}">
+                            <option th:each="m : ${members}" th:value="${m.userId}" th:text="|${m.fullName} (${m.code})|">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-input">
+                        <label class="lbl" for="inp-trader">Detail</label>
+                        <input class="inp" id="inp-trader" type="text" placeholder="Some description..."
+                            th:field="*{detail}">
+                    </div>
+                    <div class="form-input">
+                        <label class="lbl" for="inp-amount">Amount, transaction type</label>
+                        <input class="inp inp-amount" id="inp-amount" type="number" placeholder="200000"
+                            th:field="*{amount}">
+                        <select class="slc transaction__type" id="inp-type" th:field="*{transType}">
+                            <option value="COLLECTED" selected>COLLECTED</option>
+                            <option value="PAID">PAID</option>
+                        </select>
+                    </div>
+                    <div class="form-input">
+                        <label class="lbl" for="inp-trader">Bank</label>
+                        <select class="slc" id="inp-trader" th:field="*{bankId}">
+                            <option th:each="b : ${banks}" th:value="${b.bankId}" th:text="|${b.name} (${b.code})|">
+                                TECHCOMBANK</option>
+                        </select>
+                    </div>
+                    <div class="form-confirm mt-8">
+                        <input class="btn create-transaction__submit bg-green" type="submit" value="Đồng ý">
+                        <input class="btn  bg-grey" type="button" value="Huỷ" onclick="transactionModal()">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function transactionModal() {
+            let transactionModal = document.getElementById("createTransactionModal");
+            transactionModal.classList.toggle("showed");
+        }
+    </script>
+</body>
+
+</html>

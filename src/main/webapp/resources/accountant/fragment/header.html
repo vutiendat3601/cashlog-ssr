@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <link rel="stylesheet" th:href="@{/resources/common/css/base.css}">
+    <link rel="stylesheet" th:href="@{/resources/accountant/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/resources/fontawesome-free-6.2.1/css/fontawesome.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/fontawesome-free-6.2.1/css/brands.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/fontawesome-free-6.2.1/css/solid.min.css}">
+    <!-- <link rel="stylesheet" href="../../../../resources/common/css/base.css">
+    <link rel="stylesheet" href="../../../../resources/accountant/css/fragment/header.css">
+    <link rel="stylesheet" href="../../../../resources/fontawesome-free-6.2.1/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../../../../resources/fontawesome-free-6.2.1/css/brands.min.css">
+    <link rel="stylesheet" href="../../../../resources/fontawesome-free-6.2.1/css/solid.min.css"> -->
+</head>
+
+<body>
+    <header class="header" th:fragment="header">
+        <section class="header__util">
+            <div class="header__logo">
+                <img class="header__logo-img" src="../../../../resources/images/company-logo.png">
+            </div>
+            <ul class="header__menu">
+                <li class="header__menu-item">
+                    <a class="header__menu-item-link" href=""><i class="mr-6 fa-solid fa-bag-shopping"></i>Bán
+                        online</a>
+                </li>
+                <li class="header__menu-item">
+                    <a class="header__menu-item-link" href=""><i class="mr-6 fa-solid fa-truck-fast"></i>Giao hàng</a>
+                </li>
+                <li class="header__menu-item">
+                    <a class="header__menu-item-link" href=""><i class="mr-6 fa-solid fa-globe"></i>Tạo website</a>
+                </li>
+                <li class="header__menu-item">
+                    <a class="header__menu-item-link" href=""><i class="mr-6 fa-solid fa-dollar-sign"></i>Tài chính</a>
+                </li>
+                <li class="header__menu-item">
+                    <a class="header__menu-item-link" href=""><i class="mr-6 fa-solid fa-palette"></i>Chủ đề</a>
+                </li>
+                <li class="header__menu-item">
+                    <a class="header__menu-item-link" href=""><i class="mr-6 fa-solid fa-circle-info"></i>Hỗ trợ</a>
+                </li>
+            </ul>
+            <ul class="header__menu">
+                <li class="header__menu-item"><a class="header__menu-item-link" style="font-size: 16px;" href=""><i
+                            class="fa-solid fa-envelope"></i></a></li>
+                <li class="header__menu-item"><a class="header__menu-item-link" style="font-size: 16px;" href=""><i
+                            class="fa-solid fa-gear"></i></a></li>
+            </ul>
+            <div class="header__profile">
+                <a class="header__profile-link" href="">0898993601</a>
+                <div class="header__profile-avatar">
+                    <img class="header__profile-avatar-img" src="../../../../resources/images/profile-avatar.jpg">
+                </div>
+            </div>
+        </section>
+        <nav class="header__nav">
+            <div class="header__nav-container">
+                <ul class="header__nav-list">
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i class="mr-6 fa-solid fa-eye"></i>Tổng quan</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i class="mr-6 fa-solid fa-cube"></i>Hàng hoá</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i
+                                class="mr-6 fa-solid fa-arrow-right-arrow-left"></i>Giao dịch</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i class="mr-6 fa-solid fa-user-secret"></i>Đối tác</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i class="mr-6 fa-solid fa-users"></i>Nhân viên</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i class="mr-6 fa-solid fa-book"></i>Sổ quỹ</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a class="header__nav-item-link" href=""><i class="mr-6 fa-solid fa-chart-simple"></i>Báo
+                            cáo</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+</body>
+
+</html>
